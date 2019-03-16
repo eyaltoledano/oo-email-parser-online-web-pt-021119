@@ -10,17 +10,29 @@ class EmailParser
 
   def initialize(emails)
     @emails = emails
+    @@all = []
   end
 
   def parse
     if emails.include?(" ") && !emails.include?(",")
       array = emails.split(" ")
     elsif emails.include?(",")
-      array = emails.split(",")
-      array.collect {|email| email.strip}
+      array = emails.split(", ")
+      array = array.collect do |email|
+        if email.include?(" ")
+          email = email.split(" ")
+        else
+          email
+        end
+      end
+      array = array.flatten
     end
-  end
 
+    array.each do |email|
+      @@all.include?(email) ? email.clear : @@all << email
+    end
+    array = array.flatten.select {|email| email.include?("@")}
+  end
 end
 
 
