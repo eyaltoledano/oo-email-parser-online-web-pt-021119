@@ -17,8 +17,7 @@ class EmailParser
     if emails.include?(" ") && !emails.include?(",")
       array = emails.split(" ")
     elsif emails.include?(",")
-      array = emails.split(", ")
-      array = array.collect do |email|
+      array = emails.split(", ").collect do |email|
         if email.include?(" ")
           email = email.split(" ")
         else
@@ -34,12 +33,3 @@ class EmailParser
     array = array.flatten.select {|email| email.include?("@")}
   end
 end
-
-
-# array = emails.split(".com")
-# array.collect do |email|
-#   email.strip
-#   if email.include?(", ")
-#     email.slice!(0..1)
-#   end
-# end
